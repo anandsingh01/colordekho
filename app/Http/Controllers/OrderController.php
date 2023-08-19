@@ -17,8 +17,46 @@ class OrderController extends Controller
 
     function view_order($id){
         $data['page_heading'] = 'View Order';
-        $data['orders'] = Order::with('get_order_products')->find($id);
-//        print_r($data);die;
+        $data['orders'] = Order::join('order_product', 'orders.id', '=', 'order_product.order_id')
+            ->leftJoin('car_color_models', function ($join) {
+                $join->on('order_product.color_id', '=', 'car_color_models.id')
+                    ->where('order_product.type', '=', 'car');
+            })
+            ->leftJoin('bike_color_models', function ($join) {
+                $join->on('order_product.color_id', '=', 'bike_color_models.id')
+                    ->where('order_product.type', '=', 'bike');
+            })
+            ->leftJoin('car_variations_models', function ($join) {
+                $join->on('order_product.variation', '=', 'car_variations_models.id')
+                    ->where('order_product.type', '=', 'car');
+            })
+            ->leftJoin('bikevariation as bikevariation', function ($join) {
+                $join->on('order_product.variation', '=', 'bikevariation.id')
+                    ->where('order_product.type', '=', 'bike');
+            })
+            ->leftJoin('car_manufacturer_models', function ($join) {
+                $join->on('order_product.car_id', '=', 'car_manufacturer_models.id')
+                    ->where('order_product.type', '=', 'car');
+            })
+            ->leftJoin('bike', function ($join) {
+                $join->on('order_product.bike_id', '=', 'bike.id')
+                    ->where('order_product.type', '=', 'bike');
+            })
+           ->select(
+                'orders.*',
+                'car_color_models.color as car_color',
+                'bike_color_models.color as bike_color',
+                'car_variations_models.variation as car_variation',
+                'bikevariation.variation as bike_variation',
+                'bikevariation.color_id as bike_variation_color_id',
+                'car_manufacturer_models.name as car_manufacturer_name',
+                'bike.name as bike_manufacturere'
+            )
+            ->where('orders.id', $id)
+            ->get();
+
+
+        print_r($data);die;
         return view('admin.orders.view-order',$data);
     }
 

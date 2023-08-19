@@ -121,7 +121,7 @@
                                                 @endif
                                             </td>
                                             <td class="" style="">
-                                                <a href="{{url('admin/view-orders/'.$order->order_id)}}" class="btn btn-primary waves-effect waves-float btn-sm waves-green">
+                                                <a href="{{url('admin/view-orders/'.$order->id)}}" class="btn btn-primary waves-effect waves-float btn-sm waves-green">
                                                     <i class="zmdi zmdi-eye"></i></a> <br>
                                             </td>
                                         </tr>

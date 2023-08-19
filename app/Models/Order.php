@@ -14,26 +14,11 @@ class Order extends Model
         'state', 'pincode', 'phone', 'email', 'final_amount', 'coupon_code','status' ,'sales_tax','shipping_price'
     ];
 
+
+
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(OrderProduct::class, 'order_id');
     }
 
-    function get_order_products(){
-        return $this->belongsToMany(Product::class, 'order_product')
-            ->withPivot('quantity', 'price','attribute_id','size');
-    }
-
-    public function productss()
-    {
-        return $this->belongsToMany(Product::class, 'order_product')->withPivot('quantity');
-    }
-
-    function buyer_details(){
-        return $this->belongsTo('\App\Models\User','user_id','id');
-    }
-
-    function get_refund_data(){
-        return $this->belongsTo('\App\Models\ProductReturn','order_id','order_id');
-    }
 }

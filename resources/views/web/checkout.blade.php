@@ -175,6 +175,7 @@ session_start();
                                                 <input type="hidden" name="price[]" value="{{$getAllCarts['price']}}"/>
                                                 <input type="hidden" name="subtotal[]" value="{{$getAllCarts['subtotal']}}"/>
                                                 <input type="hidden" name="cartqty[]" value="{{$getAllCarts['cartqty']}}"/>
+                                                <input type="hidden" name="image[]" value="{{$getAllCarts['image']}}"/>
 
                                             @empty
                                             @endforelse

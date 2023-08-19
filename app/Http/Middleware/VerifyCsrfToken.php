@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
         'return-product',
         'send-otp',
         'verify-otp',
-        'payment/success'
+        'payment/success',
+        'update/request'
     ];
 }

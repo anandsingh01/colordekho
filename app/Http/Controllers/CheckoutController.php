@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\BikeManufacturerModel;
 use App\Models\CarManufacturerModel;
 use App\Models\Category;
+use App\Models\OrderProduct;
 use App\Models\User;
 use App\Models\UserAddress;
 use Bavix\Wallet\Models\Transaction;
@@ -382,52 +383,45 @@ class CheckoutController extends Controller
 
 
         // Assuming $order is an instance of your Order model
-        $type = $request->input('type');
-        $variations = $request->input('variation');
-        $color_id = $request->input('color_id');
-        $prices = $request->input('price');
-        $cartqty = $request->input('cartqty');
-        $car_id = $request->input('car_id');
-        $bike_id = $request->input('bike_id');
-
 //        print_r($request->all());die;
+        $type = $request->input('type');
+        $car_ids = $request->input('car_id');
+        $bike_ids = $request->input('bike_id');
+        $color_ids = $request->input('color_id');
+        $variations = $request->input('variation');
+        $mrps = $request->input('mrp');
+        $prices = $request->input('price');
+        $subtotals = $request->input('subtotal');
+        $cartqtys = $request->input('cartqty');
+        $images = $request->input('image');
+        $final_amounts = $request->input('final_amount');
 
-//        print_r($type);die;
-        if (
-            $variations && $color_id && $prices && $cartqty && ($car_id || $bike_id) &&
-            count($variations) === count($color_id) &&
-            count($variations) === count($prices) &&
-            count($variations) === count($cartqty)
-        ) {
-            for ($i = 0; $i < count($variations); $i++) {
-                $productData = [
-                    'type' => $type[$i],
-                    'attribute_id' => $variations[$i],
-                    'quantity' => $cartqty[$i],
-                    'price' => $prices[$i],
-                    // ... add more fields here
-                ];
+        $count = count($cartqtys);
 
+        $i = 0 ;
 
+        for($i = 0 ; $i < $count ; $i++){
+            $order_product = new OrderProduct();
+            $order_product->type = isset($type[$i]) ? $type[$i] : null;
+            $order_product->order_id = $order->id;
+            $order_product->car_id = isset($car_ids[$i]) ? $car_ids[$i] : null;
+            $order_product->bike_id = isset($bike_ids[$i]) ? $bike_ids[$i] : null;
+            $order_product->color_id = isset($color_ids[$i]) ? $color_ids[$i] : null;
+            $order_product->variation = isset($variations[$i]) ? $variations[$i] : null;
+            $order_product->mrp = isset($mrps[$i]) ? $mrps[$i] : null;
+            $order_product->price = isset($prices[$i]) ? $prices[$i] : null;
+            $order_product->subtotal = isset($subtotals[$i]) ? $subtotals[$i] : null;
+            $order_product->quantity = isset($cartqtys[$i]) ? $cartqtys[$i] : null;
+            $order_product->image = isset($images[$i]) ? $images[$i] : null;
+            $order_product->final_amount = isset($final_amounts[$i]) ? $final_amounts[$i] : null;
 
-                if ($car_id[$i]) {
-                    // If car_id is present, store the product relation with car details
-                    $car = CarManufacturerModel::find($car_id[$i]);
-                    if ($car) {
-                        $order->products()->attach($car->id, $productData);
-                    }
-                } elseif ($bike_id[$i]) {
-                    // If bike_id is present, store the product relation with bike details
-                    $bike = BikeManufacturerModel::find($bike_id[$i]);
-                    if ($bike) {
-                        $order->products()->attach($bike->id, $productData);
-                    }
-                }
-            }
-        } else {
+            $order_product->save();
+
         }
 
+////        print_r(count($cartqty));
 //        die;
+
 
         // Redirect the user to a success page or thank-you page
         return redirect()->route('checkout.payment');
@@ -438,14 +432,15 @@ class CheckoutController extends Controller
         if(Session::has('order_details')){
             $getOrderSession = Session::get('order_details');
         }
+//        print_r($getOrderSession);die;
 
         if(!empty($getOrderSession)){
             // Store the required data in the state parameter
             $stateData = array(
                 'total_without_cst' => $getOrderSession->final_amount,
                 'price' => $getOrderSession->final_amount,
-                'qtys' => 1,
-                'ids' => 1,
+                'ids' => $getOrderSession->id,
+                'order_id' => $getOrderSession->order_id,
                 'totalAmount' =>  $getOrderSession->final_amount,
                 'useremail' => Auth::user()->email,
                 'contact' => Auth::user()->mobile_number,
@@ -466,9 +461,9 @@ class CheckoutController extends Controller
             'merchantTransactionId' => uniqid(),
             'merchantUserId' => 'MUID123',
             'amount' => 1000,
-            'redirectUrl' => url('/payment/success').'?state=' . $stateParam, // Include the state parameter in the redirect URL
+            'redirectUrl' => url('/update/request').'?state=' . $stateParam, // Include the state parameter in the redirect URL
             'redirectMode' => 'POST',
-            'callbackUrl' => url('/payment/success'), // Replace 'response.php' with the correct path to your response handling script
+            'callbackUrl' => url('/update/request'), // Replace 'response.php' with the correct path to your response handling script
             'mobileNumber' => '$user_mobile_function',
             'paymentInstrument' => array(
                 'type' => 'PAY_PAGE',
@@ -516,88 +511,28 @@ class CheckoutController extends Controller
 
     function stripe_submit(Request $request){
 
-        Stripe\Stripe::setApiKey('sk_test_51IC66sKDGzpYlWQ2lmnGC7G9G5YFfRXe6oAWJf6mY54ho57zyixhSZV6kteU0148DrLS2wQR7spWezca0byNk7js00UC4sZleI');
+        $data = $request->all();
 
-        $stripe = new \Stripe\StripeClient('sk_test_51IC66sKDGzpYlWQ2lmnGC7G9G5YFfRXe6oAWJf6mY54ho57zyixhSZV6kteU0148DrLS2wQR7spWezca0byNk7js00UC4sZleI');
+        $getOrderData = json_decode($request->state);
 
-        $method = \Stripe\PaymentMethod::create([
-            'type' => 'card',
-            'card' => [
-                'number' => $request->card_no,
-                'exp_month' => $request->exp_month,
-                'exp_year' => $request->exp_year,
-                'cvc' => $request->cvc,
-            ],
-        ]);
+        $orderData = \App\Models\Order::find($getOrderData->ids);
+        $orderData->payment_intent_id = $data['transactionId'];
+        $orderData->payment_method = $data['providerReferenceId'];
+        $orderData->transaction_status = $data['code'];
+        $orderData->status = '1';
+        $orderData->save();
 
-        $data = $stripe->paymentIntents->create(
-            [
-                'amount' => 100 * 100,
-                'currency' => 'INR',
-                'description' => 'Lifragrances',
-                'payment_method_types' => ['card'],
-                'payment_method' => $method->id,
-                'confirm'=> true
-            ]
-        );
+        Session::flash('order_placed','Order has been placed. We will notify your Tracking Id on email');
 
-//        print_r($data);die;
+        return Redirect::to('/payment/success')->with('order_placed','Order has been placed. We will notify your Tracking Id on email');
 
-        if($data['status'] == 'succeeded') {
-
-            $orderData = \App\Models\Order::find($request->order_primary_key);
-//            print_r($orderData);die;
-            $orderData->payment_intent_id = $data['id'];
-            $orderData->payment_method = $data['payment_method'];
-            $orderData->transaction_status = $data['status'];
-            $orderData->status = '1';
-            $orderData->save();
-
-//            $getTourName = \App\Models\Tour::find($orderData->tour_id);
-//            $Category = \App\Models\Category::find($getTourName->category);
-//
-//
-//            $useremail = $orderData->email;
-//
-//            // $subject='Hooray! Your'. $orderData->first_name.' '.$orderData->last_name .'tour booking is confirmed.';
-//
-//            $subject = 'Hooray! Your'.$orderData->first_name.' '.$orderData->last_name. 'tour booking is confirmed. ';
-//
-//            $fromSend = 'info@mumbaimoments.com';
-//            $email = 'anandsingh678970@gmail.com';
-//
-//            $data2['tourname'] = $getTourName->title;
-//            $data2['meetinglocation'] = $getTourName->service_tour_meeting_point;
-//
-//            $data2['order_id'] = $orderData->order_id;
-//            $data2['members'] = $orderData->members;
-//            $data2['email'] = 'info@mumbaimoments.com';
-//            $data2['date'] = date('d M Y, D', strtotime($orderData->date));
-//            $data2['phone'] = $orderData->mobile_no;
-//            $data2['name'] = $orderData->first_name.' '.$orderData->last_name;
-//            $data2['tourtime'] = $orderData->tourtime;
-//            $data2['tour_max_price'] = $orderData->tour_max_price;
-//
-//            $data2['category'] = $Category->category;
-//
-//            \Mail::send("frontend.booking_confirmation", $data2, function ($message) use ($fromSend, $useremail, $subject) {
-//                $message->from($fromSend);
-//                $message->subject($subject);
-//                $message->to(['info@mumbaimoments.com',$useremail]);
-//                // $message->cc(['anandsingh678970@gmail.com']);
-//            });
-
-//              die;
-
-            return Redirect::to('/payment/success')->with('order_placed','Order has been placed. We will notify your Tracking Id on email');
-
-        }
 
 
     }
 
     function payment_success(Request $request){
-        print_r($request->all());die;
+
+//        print_r($orderData);die;
         return view('web.thankyou');
     }
 

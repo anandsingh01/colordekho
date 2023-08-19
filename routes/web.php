@@ -83,8 +83,8 @@ Route::post('/updateQtyCart', [App\Http\Controllers\CartController::class,'updat
 Route::post('/checkout/submit', [CheckoutController::class, 'checkout_submit'])->name('checkout.submit');
 Route::get('/checkout/payment', [CheckoutController::class, 'stripe_integrate'])
     ->name('checkout.payment');
-Route::post('/stripe/submit', [CheckoutController::class, 'stripe_submit'])->name('stripe.post');
-Route::post('/payment/success', [CheckoutController::class, 'payment_success']);
+Route::post('/update/request', [CheckoutController::class, 'stripe_submit']);
+Route::get('/payment/success', [CheckoutController::class, 'payment_success']);
 
 Route::post('updateCart', [App\Http\Controllers\CartController::class,'updateCart']);
 //Route::post('checkCoupon', [App\Http\Controllers\CartController::class,'checkCoupon']);
