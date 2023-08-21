@@ -34,7 +34,7 @@
                                     <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">General Setting</a></li>
                                     <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#profile">Profile</a></li>
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#messages">Social Media </a></li>
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Blocks">Blocks</a></li>
+{{--                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Blocks">Blocks</a></li>--}}
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">

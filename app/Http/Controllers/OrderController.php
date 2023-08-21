@@ -42,6 +42,10 @@ class OrderController extends Controller
                 $join->on('order_product.bike_id', '=', 'bike.id')
                     ->where('order_product.type', '=', 'bike');
             })
+            ->leftJoin('products', function ($join) {
+                $join->on('order_product.product_id', '=', 'products.id')
+                    ->where('order_product.type', '=', 'product');
+            })
            ->select(
                 'orders.*',
                 'order_product.image as order_image',
@@ -55,7 +59,10 @@ class OrderController extends Controller
                 'bikevariation.variation as bike_variation',
                 'bikevariation.color_id as bike_variation_color_id',
                 'car_manufacturer_models.name as car_manufacturer_name',
-                'bike.name as bike_manufacturere'
+                'bike.name as bike_manufacturere',
+                'products.title as product_title',
+                'products.product_selling_price as product_selling_price',
+                'products.photo as product_photo',
             )
             ->where('orders.id', $id)
             ->get();

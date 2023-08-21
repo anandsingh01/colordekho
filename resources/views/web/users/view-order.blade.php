@@ -114,6 +114,7 @@ session_start();
                                             <th width="60px">Item</th>
                                             <th>Car </th>
                                             <th>Bike </th>
+                                            <th>Product </th>
                                             <th>Quantity</th>
                                             <th class="hidden-sm-down">Unit Cost</th>
                                             <th>Total</th>
@@ -128,31 +129,40 @@ session_start();
                                                 <td>
 
                                                     @if($products->car_color)
-                                                        <span class="badge badge-info">Color : {{$products->car_color ?? ''}}</span><br>
+                                                        <span class="badge badge-info">Color : {{$products->car_color ?? '--'}}</span><br>
                                                     @endif
 
                                                     @if($products->car_variation)
-                                                        <span class="badge badge-success">Variations :{{$products->car_variation ?? ''}}</span><br>
+                                                        <span class="badge badge-success">Variations :{{$products->car_variation ?? '--'}}</span><br>
                                                     @endif
 
                                                     @if($products->car_manufacturer_name)
-                                                        <span class="badge badge-danger">Manufacture : {{$products->car_manufacturer_name ?? ''}}</span><br>
+                                                        <span class="badge badge-danger">Manufacture : {{$products->car_manufacturer_name ?? '--'}}</span><br>
                                                     @endif
                                                 </td>
 
                                                 <td>
 
                                                     @if($products->bike_color)
-                                                        <span class="badge badge-info">Color : {{$products->bike_color ?? ''}}</span><br>
+                                                        <span class="badge badge-info">Color : {{$products->bike_color ?? '--'}}</span><br>
                                                     @endif
 
                                                     @if($products->bike_variation)
-                                                        <span class="badge badge-success">Variations :{{$products->bike_variation ?? ''}}</span><br>
+                                                        <span class="badge badge-success">Variations :{{$products->bike_variation ?? '--'}}</span><br>
                                                     @endif
 
                                                     @if($products->bike_manufacturere)
-                                                        <span class="badge badge-danger">Manufacture : {{$products->bike_manufacturere ?? ''}}</span><br>
+                                                        <span class="badge badge-danger">Manufacture : {{$products->bike_manufacturere ?? '--'}}</span><br>
                                                     @endif
+
+                                                </td>
+
+                                                <td>
+
+                                                    @if($products->product_title)
+                                                        <span class="badge badge-info">Product : {{$products->product_title ?? '--'}}</span><br>
+                                                    @endif
+
 
                                                 </td>
                                                 <td>

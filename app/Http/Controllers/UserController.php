@@ -69,7 +69,7 @@ class UserController extends Controller
 
     function view_order($id){
         $data['page_heading'] = 'View Order';
-        $data['orders'] = $data['orders'] = Order::join('order_product', 'orders.id', '=', 'order_product.order_id')
+        $data['orders'] = Order::join('order_product', 'orders.id', '=', 'order_product.order_id')
             ->leftJoin('car_color_models', function ($join) {
                 $join->on('order_product.color_id', '=', 'car_color_models.id')
                     ->where('order_product.type', '=', 'car');
@@ -94,6 +94,10 @@ class UserController extends Controller
                 $join->on('order_product.bike_id', '=', 'bike.id')
                     ->where('order_product.type', '=', 'bike');
             })
+            ->leftJoin('products', function ($join) {
+                $join->on('order_product.product_id', '=', 'products.id')
+                    ->where('order_product.type', '=', 'product');
+            })
             ->select(
                 'orders.*',
                 'order_product.image as order_image',
@@ -107,10 +111,14 @@ class UserController extends Controller
                 'bikevariation.variation as bike_variation',
                 'bikevariation.color_id as bike_variation_color_id',
                 'car_manufacturer_models.name as car_manufacturer_name',
-                'bike.name as bike_manufacturere'
+                'bike.name as bike_manufacturere',
+                'products.title as product_title',
+                'products.product_selling_price as product_selling_price',
+                'products.photo as product_photo',
             )
             ->where('orders.id', $id)
             ->get();
+
         return view('web.users.view-order',$data);
     }
 

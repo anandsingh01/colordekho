@@ -396,9 +396,10 @@ class CheckoutController extends Controller
 
 
         // Assuming $order is an instance of your Order model
-//        print_r($request->all());die;
+
         $type = $request->input('type');
         $car_ids = $request->input('car_id');
+        $product_id = $request->input('product_id');
         $bike_ids = $request->input('bike_id');
         $color_ids = $request->input('color_id');
         $variations = $request->input('variation');
@@ -417,6 +418,7 @@ class CheckoutController extends Controller
             $order_product = new OrderProduct();
             $order_product->type = isset($type[$i]) ? $type[$i] : null;
             $order_product->order_id = $order->id;
+            $order_product->product_id = isset($product_id[$i]) ? $product_id[$i] : null;
             $order_product->car_id = isset($car_ids[$i]) ? $car_ids[$i] : null;
             $order_product->bike_id = isset($bike_ids[$i]) ? $bike_ids[$i] : null;
             $order_product->color_id = isset($color_ids[$i]) ? $color_ids[$i] : null;

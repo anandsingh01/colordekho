@@ -66,7 +66,12 @@ Route::get('privacy-policy', function (){
     return view('web.privacy-policy');
 });
 
+Route::get('about-us', function (){
+    return view('web.about');
+});
 
+
+Route::get('products', [HomeController::class, 'all_products']);
 Route::get('products/{url}', [HomeController::class, 'products_details']);
 Route::get('/search', [HomeController::class, 'searchTitle']);
 Route::get('/filter', [HomeController::class, 'filter']);
@@ -80,6 +85,7 @@ Route::get('/checkout', [App\Http\Controllers\CartController::class,'checkout'])
 Route::post('/addToWishlist', [App\Http\Controllers\WishlistController::class,'addToWishlist'])->name('addToWishlist');
 Route::post('/addToCart', [App\Http\Controllers\CartController::class,'addToCart'])->name('addToCart');
 Route::post('/addToCartBike', [App\Http\Controllers\CartController::class,'addToCartBike'])->name('addToCartBike');
+Route::post('/addToCartProduct', [App\Http\Controllers\CartController::class,'addToCartProduct'])->name('addToCartProduct');
 Route::post('/updateSizeCart', [App\Http\Controllers\CartController::class,'updateSizeCart'])->name('updateSizeCart');
 Route::post('/updateQtyCart', [App\Http\Controllers\CartController::class,'updateQtyCart'])->name('updateQtyCart');
 

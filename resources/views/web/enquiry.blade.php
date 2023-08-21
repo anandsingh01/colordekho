@@ -1,6 +1,7 @@
 @extends('layouts.web')
 <?php
 session_start();
+$getCommonSetting = getCommonSetting();
 ?>
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
@@ -31,6 +32,14 @@ session_start();
             background:unset;
         }
 
+        .form-box {
+             padding: 0;
+            box-shadow:unset;
+        }
+
+        .form-tab .form-footer {
+            border-bottom: unset;
+        }
 
     </style>
 @stop
@@ -42,86 +51,83 @@ session_start();
     ?>
 
     <main class="main">
-        <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+
+
+        <div class="" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
             <div class="container">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Enquiry</li>
-                </ol>
-            </div><!-- End .container -->
-        </nav><!-- End .breadcrumb-nav -->
-
-        <div class="enquiry-form login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
-            <div class="container">
-
-
-
-                <div class="form-box">
-                    @if(Session::has('success'))
-                        <div class="col-6 col-lg-4 col-xl-2 text-center">
-                            <div class="btn-wrap">
-                                <span>{{Session::get('success')}}</span>
-                                {{--                            <a href="#" class="btn btn-outline-primary btn-rounded"><i class="icon-long-arrow-right"></i><span>Button text</span></a>--}}
-                            </div><!-- End .btn-wrap -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="text-center">Enquiry Form</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pb-5 pt-5">
+                            <p class="pb-2 pt-2"><h5>Address : </h5> {{$getCommonSetting->contact_address}}  </p>
+                            <p class="pb-2 pt-2"><h5>Email : </h5> {{$getCommonSetting->contact_email}}  </p> <br>
+                            <p class="pb-2 pt-2"><h5>Phone : </h5> {{$getCommonSetting->contact_phone}}  </p><br>
                         </div>
-                    @endif
-                    <div class="form-tab">
-                        <ul class="nav nav-pills nav-fill" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Enquiry Form</a>
-                            </li>
-                        </ul>
+                    </div>
+                    <div class="col-md-6">
 
-                        @if(Session::has('enquiry_sent'))
-                            <div class="alert alert-info text-center">
-                                {{Session::get('enquiry_sent')}}
-                            </div>
+                        <div class="form-box">
+                            @if(Session::has('success'))
+                                <div class="col-6 col-lg-12 col-xl-2 text-center">
+                                    <div class="btn-wrap">
+                                        <span>{{Session::get('success')}}</span>
+                                        {{--                            <a href="#" class="btn btn-outline-primary btn-rounded"><i class="icon-long-arrow-right"></i><span>Button text</span></a>--}}
+                                    </div><!-- End .btn-wrap -->
+                                </div>
                             @endif
-                        <div class="tab-content" id="tab-content-5">
-                            <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                                <form action="{{url('send-enquiry') }}" method="post">
-                                    @csrf
-
-                                    <div class="form-group">
-                                        <label for="register-name">Name  *</label>
-                                        <input type="text" class="form-control" id="register-name"
-                                               name="name" required>
+                            <div class="form-tab">
+                                @if(Session::has('enquiry_sent'))
+                                    <div class="alert alert-info text-center">
+                                        {{Session::get('enquiry_sent')}}
                                     </div>
+                                @endif
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
+                                        <form action="{{url('send-enquiry') }}" method="post">
+                                            @csrf
 
-                                    <div class="form-group">
-                                        <label for="register-email">Your email address *</label>
-                                        <input type="email" class="form-control" id="email" name="email" required>
-                                    </div>
+                                            <div class="form-group">
+                                                <label for="register-name">Name  *</label>
+                                                <input type="text" class="form-control" id="register-name"
+                                                       name="name" required>
+                                            </div>
 
-
-                                    <div class="form-group">
-                                        <label for="register-password">Mobile  *</label>
-                                        <input type="phone" class="form-control" name="phone" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="register-email">Your message *</label>
-                                        <textarea class="form-control" id="register-email" name="message" required> </textarea>
-                                    </div>
-                                    <p class="" style="font-size:10px; line-height:10px;">
-                                        By clicking "Submit?", I confirm I have read and agreed to this website's Terms of Service and Privacy Policy and provide my express written consent via electronic signature authorizing lifragrances.com and one or more law firms, their agents and marketing partners to contact me about my Enquiry and other related products and services to the number and email address I provided (including any wireless number). I further expressly consent to receive telemarketing emails, calls, text messages, pre-recorded messages, and artificial voice messages via an autodialed phone system, even if my telephone number is a mobile number that is currently listed on any state, federal or corporate “Do Not Call” list. I understand that my consent is not a condition of purchase of any goods or services and that standard message and data rates may apply.
+                                            <div class="form-group">
+                                                <label for="register-email">Your email address *</label>
+                                                <input type="email" class="form-control" id="email" name="email" required>
+                                            </div>
 
 
-                                    </p>
-                                    <div class="form-footer">
-                                        <button type="submit" class="btn btn-outline-primary-2">
-                                            <span>Send</span>
-                                            <i class="icon-long-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </form>
+                                            <div class="form-group">
+                                                <label for="register-password">Mobile  *</label>
+                                                <input type="phone" class="form-control" name="phone" required>
+                                            </div>
 
-                            </div><!-- .End .tab-pane -->
+                                            <div class="form-group">
+                                                <label for="register-email">Your message *</label>
+                                                <textarea class="form-control" id="register-email" name="message" required> </textarea>
+                                            </div>
+                                            <div class="form-footer">
+                                                <button type="submit" class="btn btn-outline-primary-2">
+                                                    <span>Send</span>
+                                                    <i class="icon-long-arrow-right"></i>
+                                                </button>
+                                            </div>
+                                        </form>
 
-                        </div><!-- End .tab-content -->
-                    </div><!-- End .form-tab -->
-                </div><!-- End .form-box -->
+                                    </div><!-- .End .tab-pane -->
+
+                                </div><!-- End .tab-content -->
+                            </div><!-- End .form-tab -->
+                        </div><!-- End .form-box -->
+                    </div>
+
+                    <div class="col-md-12">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d1884.7728494690914!2d72.824597!3d19.127576!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTnCsDA3JzM5LjMiTiA3MsKwNDknMzIuOSJF!5e0!3m2!1sen!2sin!4v1692622714395!5m2!1sen!2sin"  style="border:0; width: 100%; height:450px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
             </div><!-- End .container -->
         </div><!-- End .login-page section-bg -->
     </main>

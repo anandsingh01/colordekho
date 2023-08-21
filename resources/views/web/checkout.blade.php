@@ -152,11 +152,11 @@ session_start();
                                                         </h3>
 
                                                         <h3 class="product-title">
-                                                            Color : {{$getAllCarts['color']}}
+                                                            Color : {{$getAllCarts['color'] ?? ''}}
                                                         </h3>
 
                                                         <p>
-                                                            Variation : {{$getAllCarts['variation']}}
+                                                            Variation : {{$getAllCarts['variation'] ?? ''}}
                                                         </p>
                                                     </td>
                                                     <td>
@@ -168,9 +168,10 @@ session_start();
                                                 </tr>
                                                 <input type="hidden" name="type[]" value="{{$getAllCarts['type']}}"/>
                                                 <input type="hidden" name="car_id[]" value="{{$getAllCarts['car_id'] ?? ''}}"/>
+                                                <input type="hidden" name="product_id[]" value="{{$getAllCarts['product_id'] ?? ''}}"/>
                                                 <input type="hidden" name="bike_id[]" value="{{$getAllCarts['bike_id'] ?? ''}}"/>
-                                                <input type="hidden" name="color_id[]" value="{{$getAllCarts['color_id']}}"/>
-                                                <input type="hidden" name="variation[]" value="{{$getAllCarts['variation']}}"/>
+                                                <input type="hidden" name="color_id[]" value="{{$getAllCarts['color_id'] ?? ''}}"/>
+                                                <input type="hidden" name="variation[]" value="{{$getAllCarts['variation'] ?? ''}}"/>
                                                 <input type="hidden" name="mrp[]" value="{{$getAllCarts['mrp']}}"/>
                                                 <input type="hidden" name="price[]" value="{{$getAllCarts['price']}}"/>
                                                 <input type="hidden" name="subtotal[]" value="{{$getAllCarts['subtotal']}}"/>

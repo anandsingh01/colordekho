@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeliverAddress;
 use App\Models\Offer;
+use App\Models\Product;
 use Auth;
 use App\Models\WishlistModel;
 use App\Models\Cart;
@@ -185,6 +186,67 @@ class CartController extends Controller
         ]);
     }
 
+    public function addToCartProduct(Request $request)
+    {
+
+        $get_product = Product::find($request->productId);
+//        print_r($request->all());die;
+        $productId = $request->productId;
+        $price = $get_product->product_selling_price;
+        $mrp = $get_product->product_actual_price;
+
+        $userIp = $this->getUserIP();
+        $userId = auth()->check() ? auth()->id() : null;
+
+        $cartData = Cart::where('product_id', $productId)
+            ->where('user_id', $userId)
+            ->first();
+
+        if ($cartData === null) {
+            $cartData = new Cart();
+
+            $cartData->image = $get_product->photo;
+            $cartData->type = 'product';
+            $cartData->product_id = $productId;
+            $cartData->user_id = $userId;
+            $cartData->ip_address = $userIp;
+            $cartData->price = $price;
+            $cartData->mrp = $mrp;
+            $cartData->cartqty = 1;
+            $cartData->subtotal = $price;
+
+
+            $cartData->save();
+        } else {
+            $cartData->cartqty += 1;
+            $cartData->subtotal += $price;
+            $cartData->mrp += $mrp;
+
+            $cartData->save();
+        }
+
+        // Calculate cart totals
+        $cartCount = Cart::where('user_id', $userId)->count();
+        $productSubtotal = Cart::where('user_id', $userId)
+            ->where('product_id', $productId)
+            ->select('subtotal')
+            ->first();
+        $qty = Cart::where('user_id', $userId)
+            ->where('product_id', $productId)
+            ->select('cartqty')
+            ->first();
+        $cartSubtotal = Cart::where('user_id', $userId)->sum('subtotal');
+
+        return response()->json([
+            'code' => 200,
+            'cartCount' => $cartCount,
+            'subtotal' => $productSubtotal,
+            'qty' => $qty,
+            'cartSubtotal' => $cartSubtotal,
+            'status' => 'Added to cart'
+        ]);
+    }
+
     function getUserIP()
     {
         // Get real visitor IP behind CloudFlare network
@@ -217,7 +279,8 @@ class CartController extends Controller
         $cartItems = \App\Models\Cart::where('ip_address',$_SERVER['REMOTE_ADDR'])
             ->with([
                 'car_color','car_manufacturer','car_variation',
-                'bike_color','bike_variation','bike_manufacturer'
+                'bike_color','bike_variation','bike_manufacturer',
+                'products'
             ])
             ->get();
 
@@ -252,6 +315,20 @@ class CartController extends Controller
                     'subtotal' => $item->subtotal,
                     'cartqty' => $item->cartqty,
                     'image' => $item->image, // Change this to the correct image column name
+                    // ... other fields
+                ];
+            }elseif (!empty($item->product_id)) {
+                // Fetch details from the car relationship
+                $get_product = Product::find($item->product_id);
+                $details = [
+                    'manufacturer' => $get_product->title,
+                    'type' => 'product',
+                    'mrp' => $item->mrp,
+                    'id' => $item->id,
+                    'price' => $item->price,
+                    'subtotal' => $item->subtotal,
+                    'cartqty' => $item->cartqty,
+                    'image' => $get_product->photo, // Change this to the correct image column name
                     // ... other fields
                 ];
             } else {
@@ -482,6 +559,21 @@ class CartController extends Controller
                     'color_id' => $item->color_id,
                     'variation' => $item->variation,
                     'image' => $item->image, // Change this to the correct image column name
+                    // ... other fields
+                ];
+            } elseif (!empty($item->product_id)) {
+                // Fetch details from the car relationship
+                $get_product = Product::find($item->product_id);
+                $details = [
+                    'product_id' => $get_product->id,
+                    'manufacturer' => $get_product->title,
+                    'type' => 'product',
+                    'mrp' => $item->mrp,
+                    'id' => $item->id,
+                    'price' => $item->price,
+                    'subtotal' => $item->subtotal,
+                    'cartqty' => $item->cartqty,
+                    'image' => $get_product->photo, // Change this to the correct image column name
                     // ... other fields
                 ];
             } else {

@@ -82,11 +82,11 @@ session_start();
                                                 </figure>
 
                                                 <h3 class="product-title">
-                                                  {{$getAllCarts['manufacturer']}} - {{$getAllCarts['color']}}
+                                                  {{$getAllCarts['manufacturer'] ?? ''}} - {{$getAllCarts['color'] ?? ''}}
                                                 </h3>
 
                                                 <p>
-                                                    {{$getAllCarts['variation']}}
+                                                    {{$getAllCarts['variation'] ?? ''}}
                                                 </p>
                                             </div>
                                         </td>

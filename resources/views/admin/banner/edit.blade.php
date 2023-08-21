@@ -78,15 +78,15 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 mtb-10">
-                                    <label class="control-label" for="password"> Display Area </label>
-                                    <select name="display_area" class="form-control ms">
-                                        <option value="1" {{$banner->display_area == 1 ? 'selected' : ''}}>Banner</option>
-                                        <option value="2" {{$banner->display_area == 2 ? 'selected' : ''}}>Below Banner</option>
-                                        <option value="3" {{$banner->display_area == 3 ? 'selected' : ''}}>Middle</option>
-                                        <option value="4" {{$banner->display_area == 4 ? 'selected' : ''}}>Footer</option>
-                                    </select>
-                                </div>
+{{--                                <div class="col-lg-12 col-md-12 mtb-10">--}}
+{{--                                    <label class="control-label" for="password"> Display Area </label>--}}
+{{--                                    <select name="display_area" class="form-control ms">--}}
+{{--                                        <option value="1" {{$banner->display_area == 1 ? 'selected' : ''}}>Banner</option>--}}
+{{--                                        <option value="2" {{$banner->display_area == 2 ? 'selected' : ''}}>Below Banner</option>--}}
+{{--                                        <option value="3" {{$banner->display_area == 3 ? 'selected' : ''}}>Middle</option>--}}
+{{--                                        <option value="4" {{$banner->display_area == 4 ? 'selected' : ''}}>Footer</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
 
 
                                 <input type="hidden" name="id" value="{{$banner->id}}">

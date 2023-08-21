@@ -67,6 +67,10 @@ class Cart extends Model
     {
         return $this->belongsTo(BikeManufacturerModel::class, 'bike_id');
     }
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 
 
 }

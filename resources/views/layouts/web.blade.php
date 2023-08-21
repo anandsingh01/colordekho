@@ -208,8 +208,13 @@ $get_brands = get_brands();
                                     <a href="{{url('enquiry-form')}}">Enquiry Form</a>
                                 </li>
 
+
+                                <li class="">
+                                    <a href="{{url('products')}}">Products</a>
+                                </li>
+
                                 @if(!Auth::check())
-                                    <li><a href="{{url('login')}}" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                                    <li><a href="{{url('login')}}"><i class="icon-user"></i>Login</a></li>
 
                                 @else
                                     <li><a href="{{url('my-profile')}}">My Profile</a></li>
@@ -289,7 +294,7 @@ $get_brands = get_brands();
                                     <h4 class="widget-title text-white">Information</h4><!-- End .widget-title -->
 
                                     <ul class="widget-list">
-                                        <li><a href="#">About Lifragrances</a></li>
+                                        <li><a href="#">About ColourDekho</a></li>
                                         <li><a href="#">FAQ</a></li>
                                         <li><a href="{{url('/enquiry-form')}}">Contact us</a></li>
                                     </ul><!-- End .widget-list -->
