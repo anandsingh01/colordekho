@@ -39,130 +39,24 @@ session_start();
 
         <div class="" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
             <div class="container">
-                <div class="row">
-                    <h3 class="text-center">RETURN POLICY:</h3>
-                    <div class="col-md-12">
-                        <p>
-                            All returns will be processed ONLY for unopened merchandise in its original condition, including original packaging and invoice/packing slip within 15 days of receipt and you will receive a refund of the product.
-                            <br>
-                            Shipping costs you incur to return the product to us will not be refunded. Shipping cost is non-refundable for undelivered, unclaimed or return packages, unless we made an error.
-                            <br>
-                            Please note the following information is needed to process the return. (The return will not be processed if any of the below information is missing)
+                <div class="column">
+                    <div style="text-align:justify">
 
-                            <ul>
+                        <p>Return means an action of giving back the products ordered either wholly or partly back to Colour Dekho. The following are the reasons for return.
+                            Product/s delivered do not match your order. Product/s delivered are past or near it’s expiry date ( which should be within 1 months of expiry date ).</p>
+                        <p>Products found damaged at the time of delivery and in this event the user must check the package and items for any damages at the time of delivery in front of our delivery person and also if the products are not as per the enclosed invoice to initiate smooth return and refund. In the event if the user finds the damage or wrong items were received either wholly or partly the user must raise a return/refund request with our customer care within 7 days from the date of delivery of the products. We shall not be held liable for return if the request is raised after 7 days of delivery date. Upon receiving the Return request Colour Dekho shall verify the authenticity and the nature of the request.</p>
+                        <p> If the request is found to be genuine we shall initiate process for the request. In the event of frivolous or unjustified requests regarding the quality and content of the products no return, replacement or refund shall be done from our end and we reserve the right to pursue necessary legal actions against the user and the user shall be solely liable and responsible for all costs incurred by us i.e. Colour Dekho.</p>
 
-                            <li>
-                                RMA number – Please email us at info@lifragrances.com to obtain the RMA number of your order.
-
-                            </li>
-                            <li>
-                                Full name and address
-
-                            </li>
-                            <li>
-                                Phone number
-
-                            </li>
-                            <li>
-                                E-mail address
-
-                            </li>
-                            <li>Packing slip
-                               </li>
-                            <li> Original order confirmation number
-                               </li>
-                            <li> Your reason for returning the merchandise.</li>
-{{--                            <li></li>--}}
-                        </ul>
-
-                        <br>
-                        Please return the UNOPENED merchandise to the sender’s address.
-                        <br>
-                        All returns must be shipped back to lifragrances.com using a trackable courier. (UPS, FedEx, USPS Delivery confirmation)
-                        <br>
-                        Any package that has not been received by Lifragrances.com and tracking information cannot be provided, will be the sole responsibility of the shipper.
-                        <br>
-                        PLEASE ALLOW UPTO 14 BUSINESS DAYS TO PROCESS YOUR RETURN OR EXCHANGE.
-                        <br>
-                        If your package is returned marked as “Refused”, “Damage Claims”, or “undeliverable”, and you would like to have it re-shipped; we will automatically need to charge a $7.99 re-shipping fee.
-
-                        </p>
-
-                        <p>
-                        <h3>Damage claims:</h3>
-
-                        If you received any damaged order, please email us within 3 days to the date of delivery with proper pictures. A replacement will be sent to you in 10 business days.
-                        </p>
-
-                        <p>
-                        <h3>Undelivered package: </h3>
-                        You must need to notify us within 15 days from the date of order if you have not received your package to info@lifragrances.com.
-                        </p>
+                        <h5><b>The Returns shall be subject to the following conditions:</b></h5>
+                        <p>Any wrong ordering of products can be qualify for return. Batch number of the product being returned should match with the original invoice. Return requests arising due to change in the original prescription and not found to be the same as uploaded on our phone do not qualify for returns. Products being returned should only be in their original package i.e. with the price tags, labels, barcodes and should contain the original invoice. Partially consumed strips, products do not qualify for return and only fully unopened items or products can be returned.</p>
+                        <h5><b>Non Refundable products:</b></h5>
+                        <p>The user should note that all products that fall under the non refundable category. The users are therefore requested to call us on our customer care number or other official numbers as provided by us or email us in care colourdekho@gmail.com</p>
 
 
-                        <br>
-
-                        <h3>
-                            Cancellations:
-                        </h3>
-
-                        <p> Since we use automated order processing systems, we are unable to cancel or modify your order once it is submitted. If you have any other questions, please contact info@lifragrances.com.</p>
-
-                        <h3>
-                            Waiting list:
-                        </h3>
-
-                        <p>
-                            If you see a product in our site that is out of stock, simply enter your email address and click “Notify me”. An email will be sent to you automatically as soon as we get the item back in stock.
-                        </p>
 
 
-                        <p>
-                        <h3>
-                            SHIPPING INFORMAITON:
 
 
-                        </h3>
-                        <p>
-                           <b>
-                               FREE standard shipping for all orders above $75.00
-                           </b>
-                        </p>
-                        (The $75.00 total is calculated AFTER any promotion, coupon deductions and before taxes)
-
-                        <br>
-                        Shipping charges for Standard Ground shipping is calculated by our system automatically depending on weight and location of shipment ordered.
-                        </p>
-
-                        <p>
-                        <h6> Standard U.S. shipping (4-7 business days)</h6>
-                        U.S. orders will be shipped via U.S. Postal Service, UPS or FedEx. Most packages arrive within 4-7 business days. (Not a guaranteed service)
-
-                        </p>
-
-                        <p>
-                        <h6> Express U.S. Shipping (2-3 business days guaranteed).</h6>
-                        Not available at P.O. Boxes.
-                        Starting at $15.99 depending on weight of shipment ordered.
-
-                        </p>
-
-                        <p>
-                        <h6> 1-Business Day shipping (1 business day guaranteed)</h6>
-                        Order by 12pm Eastern Time for delivery next business day. <br>
-                        Excluding weekends. Not available at P.O. Boxes.<br>
-                        Starting at $19.99 depending on weight of shipment ordered.
-
-                        <br>
-                        We may change these shipping charges from time to time in the future. Any such changes will be posted here. We advise you to check back frequently to see any updates or changes.
-
-                        </p>
- <p>
-                        <h6>International Orders:</h6>
-                        Currently Long Island Fragrances LLC is operating ONLY in U.S. And all the orders and shipments will be only in U.S.
-                        </p>
-
-                       <br>
 
                     </div>
                 </div>

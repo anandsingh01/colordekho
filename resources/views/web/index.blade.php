@@ -1,6 +1,8 @@
 <?php $getCommonSetting = getCommonSetting();?>
 @extends('layouts.web')
 @section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
     <style>
         .block_box {
             background: #000;
@@ -77,7 +79,11 @@
             max-height: 400px;
             width: 100%;
         }
+        span.select2.select2-container.select2-container--default {
+            width: 100% !important;
+        }
     </style>
+
 @stop
 @section('body')
     <?php
@@ -129,12 +135,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" id="cars-tab" data-toggle="tab"
                            href="#cars" role="tab" aria-controls="cars" aria-selected="true">
-                            <h3 class="mb-3">Car Paint</h3>
+                            <h5 class="mb-1">Car Paint</h5>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="bikes-tab" data-toggle="tab" href="#bikes" role="tab"
-                           aria-controls="bikes" aria-selected="false"><h3 class="mb-3">Bike Paint</h3></a>
+                           aria-controls="bikes" aria-selected="false"><h5 class="mb-1">Two Wheeler Paint</h5></a>
                     </li>
                 </ul>
                 <div class="tab-content" id="tab-content-5">
@@ -144,7 +150,7 @@
                                 <form class="row contact_form" action="#" enctype="multipart/form-data" method="post" id="form" novalidate="novalidate">
                                     <div class="col-md-12 form-group p_star" data-select2-id="8">
                                         <label>Manufacture</label>
-                                        <select name="car_manufacture" id="car_manufacture" class="form-control manufacture select2 select2-hidden-accessible" data-select2-id="car_manufacture" tabindex="-1" aria-hidden="true">
+                                        <select name="car_manufacture" id="car_manufacture" class="form-control manufacture sel2">
                                             <option>Select Manufacture</option>
                                             @forelse($car_manufacturer as $car_manufacturers)
                                                 <option value="{{$car_manufacturers->id}}">{{$car_manufacturers->name}}</option>
@@ -154,14 +160,14 @@
                                     </div>
                                     <div class="col-md-12 form-group p_star">
                                         <label>Color</label>
-                                        <select name="car_colors" id="car_colors" class="form-control colors select2 select2-hidden-accessible" data-select2-id="colors" tabindex="-1" aria-hidden="true">
+                                        <select name="car_colors" id="car_colors" class="form-control colors sel2" >
                                             <option value="" data-select2-id="4">Select Color</option>
                                         </select>
                                     </div>
                                     <div class="col-md-12 form-group p_star">
-                                        <label>Variation</label>
-                                        <select name="car_variations" id="car_variations" class="form-control variations select2 select2-hidden-accessible" data-select2-id="variations" tabindex="-1" aria-hidden="true">
-                                            <option value="" data-select2-id="6">Select Variation</option>
+                                        <label>Quantity</label>
+                                        <select name="car_variations" id="car_variations" class="form-control variations sel2">
+                                            <option value="" data-select2-id="6">Select Quantity</option>
                                         </select>
                                     </div>
                                     <div class="col-md-12 form-group p_star">
@@ -189,9 +195,9 @@
                     </div>
                     <div class="tab-pane fade" id="bikes" role="tabpanel" aria-labelledby="bikes-tab">
                         <form class="row contact_form" action="#" enctype="multipart/form-data" method="post" id="form" novalidate="novalidate">
-                            <div class="col-md-12 form-group p_star" data-select2-id="8">
+                            <div class="col-md-12 form-group p_star">
                                 <label>Manufacture</label>
-                                <select name="bike_manufacture" id="bike_manufacture" class="form-control bike_manufacture select2 select2-hidden-accessible" data-select2-id="bike_manufacture" tabindex="-1" aria-hidden="true">
+                                <select name="bike_manufacture" id="bike_manufacture" class="form-control bike_manufacture sel3">
                                     <option>Select Manufacture</option>
                                     @forelse($bike_manufacturer as $bike_manufacturers)
                                         <option value="{{$bike_manufacturers->id}}">{{$bike_manufacturers->name}}</option>
@@ -201,14 +207,14 @@
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <label>Color</label>
-                                <select name="bike_colors" id="bike_colors" class="form-control colors select2 select2-hidden-accessible" data-select2-id="colors" tabindex="-1" aria-hidden="true">
+                                <select name="bike_colors" id="bike_colors" class="form-control colors  sel2">
                                     <option value="" data-select2-id="4">Select Color</option>
                                 </select>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <label>Variation</label>
-                                <select name="bike_variations" id="bike_variations" class="form-control variations select2 select2-hidden-accessible" data-select2-id="variations" tabindex="-1" aria-hidden="true">
-                                    <option value="" data-select2-id="6">Select Variation</option>
+                                <label>Quantity</label>
+                                <select name="bike_variations" id="bike_variations" class="form-control variations sel2">
+                                    <option value="" data-select2-id="6">Select Quantity</option>
                                 </select>
                             </div>
                             <div class="col-md-12 form-group p_star">
@@ -242,9 +248,24 @@
 @stop
 @section('script')
 
+{{--    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
 {{--  Car Functions  --}}
     <script>
         $(document).ready(function() {
+
+            // Initialize Select2 for the manufacture dropdown
+            $('.sel2').select2();
+            $('.sel3').select2();
+
+            // // Initialize Select2 for the colors dropdown
+            // $('#car_colors').select2();
+            //
+            // // Initialize Select2 for the variations dropdown
+            // $('#car_variations').select2();
+
 
             $('#car_manufacture').on('change', function() {
                 var car_manufacture = $(this).val();
@@ -275,7 +296,7 @@
                 var car_colors = $(this).val();
 
                 // Clear previous variation options
-                $('#car_variations').empty().append('<option value="">Select Variation</option>');
+                $('#car_variations').empty().append('<option value="">Select Quantity</option>');
 
                 // Fetch variations using AJAX
                 $.ajax({
@@ -360,9 +381,9 @@
                     success: function(response) {
                         $('#body-id').load('#body-id');
                         if (response.success) {
-                            alert('Car added to cart successfully!');
+                            alert(' added to cart successfully!');
                         } else {
-                            alert('Failed to add car to cart.');
+                            alert(' added to cart successfully!');
                         }
                     },
                     error: function() {
@@ -380,6 +401,8 @@
 {{--  Bike Functions  --}}
 <script>
     $(document).ready(function() {
+
+
 
         $('#bike_manufacture').on('change', function() {
             var bike_manufacture = $(this).val();
@@ -410,7 +433,7 @@
             var car_colors = $(this).val();
 
             // Clear previous variation options
-            $('#bike_variations').empty().append('<option value="">Select Variation</option>');
+            $('#bike_variations').empty().append('<option value="">Select Quantity</option>');
 
             // Fetch variations using AJAX
             $.ajax({
@@ -495,9 +518,9 @@
                 success: function(response) {
                     $('#body-id').load('#body-id');
                     if (response.success) {
-                        alert('Car added to cart successfully!');
+                        alert('Bike added to cart successfully!');
                     } else {
-                        alert('Failed to add car to cart.');
+                        alert('Bike added to cart successfully!');
                     }
                 },
                 error: function() {

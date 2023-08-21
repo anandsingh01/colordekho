@@ -51,33 +51,35 @@ session_start();
                         </ul>
                         <div class="tab-content" id="tab-content-5">
                             <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                                <form action="{{url('check-login')}}" method="post">
+                                <form action="{{url('check-login')}}" method="post" id="login-form">
                                     @csrf
                                     <div class="form-group">
                                         <label for="singin-password">Phone *</label>
-                                        <input type="text" class="form-control" id="singin-password"
-                                               name="phone_number" required>
+                                        <input type="text" class="form-control" id="mobile" name="phone_number" required>
+                                        <button type="button" class="btn btn-info pt-2 pb-2" id="get-otp">Get OTP</button>
                                     </div>
 
-                                    <div class="form-footer">
-                                        <button type="submit" class="btn btn-outline-primary-2">
-                                            <span>LOG IN</span>
-                                            <i class="icon-long-arrow-right"></i>
-                                        </button>
+                                    <div class="form-group" id="otp_div" style="display: none;">
+                                        <label for="singin-password">Enter OTP *</label>
+                                        <input type="text" class="form-control" id="otp" name="otp" required>
+                                        <button type="button" class="btn btn-success mt-2 pt-2 pb-2"  id="verify-otp">Verify OTP</button>
 
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="signin-remember">
-                                            <label class="custom-control-label" for="signin-remember">Remember Me</label>
-                                        </div><!-- End .custom-checkbox -->
+                                        <br>
+                                        <br>
 
-                                        <a href="#" class="forgot-link">Forgot Your Password?</a>
-                                    </div><!-- End .form-footer -->
+                                    </div>
+
+{{--                                    <button type="submit" id="submit-button" disabled class="btn btn-outline-primary-2">--}}
+{{--                                        <span>LOG IN</span>--}}
+{{--                                        <i class="icon-long-arrow-right"></i>--}}
+{{--                                    </button>--}}
+
                                 </form>
 
 
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                <form action="{{ route('register') }}" method="post">
+                                <form action="{{ route('register') }}" method="post" id="login-form">
                                     @csrf
 
                                     <div class="form-group">
@@ -94,7 +96,7 @@ session_start();
                                     <div class="form-group">
                                         <label for="singin-password">Phone *</label>
                                         <input type="text" class="form-control" id="mobile" name="phone_number" required>
-                                        <button type="button" id="get-otp">Get OTP</button>
+                                        <button type="button" class="btn btn-info mt-2 pt-2 pb-2"  id="get-otp">Get OTP</button>
                                     </div>
 
                                     <div class="form-group" id="otp_div" style="display: none;">
@@ -108,13 +110,13 @@ session_start();
                                     {{--                                        <input type="password" class="form-control" id="register-password" name="register-password" required>--}}
                                     {{--                                    </div>--}}
 
-                                    <div class="form-footer">
-                                        <button type="submit" class="btn btn-outline-primary-2" id="submit-button" disabled>
-                                            <span>SIGN UP</span>
-                                            <i class="icon-long-arrow-right"></i>
-                                        </button>
+{{--                                    <div class="form-footer">--}}
+{{--                                        <button type="submit" class="btn btn-outline-primary-2" id="submit-button" disabled>--}}
+{{--                                            <span>SIGN UP</span>--}}
+{{--                                            <i class="icon-long-arrow-right"></i>--}}
+{{--                                        </button>--}}
 
-                                    </div>
+{{--                                    </div>--}}
                                 </form>
                             </div><!-- .End .tab-pane -->
                         </div><!-- End .tab-content -->

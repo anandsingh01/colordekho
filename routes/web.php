@@ -24,7 +24,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
 
-
+Route::get('clear-cache',function (){
+    Artisan::call('optimize:clear');
+    Artisan::call('config:clear');
+});
 
 Route::get('login', [LoginController::class, 'login_page']);
 
@@ -119,8 +122,15 @@ Route::get('/privacy-policy', function (){
 Route::get('/return-policy', function (){
     return view('web.return-policy');
 });
-Route::get('/pricing-information', function (){
-    return view('web.pricing-ordering-information');
+Route::get('/terms-and-conditions', function (){
+    return view('web.terms');
+});
+Route::get('/cancellation-policy', function (){
+    return view('web.cancel');
+});
+
+Route::get('/shipping-policy', function (){
+    return view('web.shipping-policy');
 });
 
 Route::get('/order-status', function (){

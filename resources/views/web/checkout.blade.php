@@ -179,11 +179,6 @@ session_start();
 
                                             @empty
                                             @endforelse
-                                            <tr>
-                                                <td>Sales Tax:</td>
-                                                <td><div class="salesTaxDiv"></div></td>
-                                            </tr>
-
                                             @if(Session::has('discounted_total'))
                                                 <tr class="summary-subtotal">
                                                     <td>Coupon Applied:</td>
@@ -200,26 +195,44 @@ session_start();
                                                     @endif
                                                 </td>
                                             </tr>
-{{--                                            <tr>--}}
-{{--                                                <td>Delivery</td>--}}
-{{--                                                <td>--}}
-{{--                                                    <div class="form-group">--}}
-{{--                                                        <select class="form-control" id="courier-select" name="selected_courier">--}}
-{{--                                                            <option value="" disabled selected >Select a courier</option>--}}
-{{--                                                        </select>--}}
-{{--                                                    </div>--}}
-{{--                                                </td>--}}
-{{--                                            </tr>--}}
-                                            <input type="hidden" class="form-control" id="final-amount" name="final_amount"
-                                                   value="{{$get_count->cartTotal }}"
+                                            <tr>
+                                                <td>Sales Tax:</td>
+                                                <td><div class="salesTaxDiv">18% GST</div></td>
+                                            </tr>
+
+
+                                            <?php
+                                            $percentageToAdd = $get_count->cartTotal * 0.18;
+                                            // Add the calculated amount to the initial value
+                                            $finalValue = $get_count->cartTotal + $percentageToAdd;
+                                            ?>
+                                            <input type="hidden" class="form-control" id="cart-amount" name="cart_amount"
+                                                   value="{{$get_count->cartTotal}}"
                                                    readonly>
-                                            <tr  class="summary-subtotal">
+
+                                            <input type="hidden" class="form-control" id="final-amount" name="final_amount"
+                                                   value="{{$finalValue}}"
+                                                   readonly>
+                                            <input type="hidden" class="form-control" id="sales_tax" name="sales_tax"
+                                                   value="18%"
+                                                   readonly>
+                                            <tr class="summary-subtotal">
                                                 <td>Payable Amount:</td>
-                                                <td><div class="finalTaxDiv"></div></td>
+                                                <td><div class="finalTaxDiv">{{$finalValue}}</div></td>
+                                            </tr>
+
+                                            <tr class="summary-subtotal">
+                                                <td>Select Payment Mode:</td>
+                                                <td>
+                                                    <select name="payment_mode">
+                                                        <option value="1">Pay Online</option>
+                                                        <option value="2">COD</option>
+                                                    </select>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table><!-- End .table table-summary -->
-                                        <button type="submit" class="btn btn-order btn-primary btn-block pb-2 pt-2">PAY</button>
+                                        <button type="submit" class="btn btn-order btn-primary btn-block pb-2 pt-2">Procceed</button>
                                     </div><!-- End .summary -->
                                 </aside><!-- End .col-lg-3 -->
                             </div>

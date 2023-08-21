@@ -59,6 +59,7 @@ session_start();
                                 <th>Order Id</th>
                                 <th>User</th>
                                 <th>Status</th>
+                                <th>Payment Mode</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -90,6 +91,15 @@ session_start();
                                             @if($order->status == 2)
                                                 <span class="badge badge-danger">Cancelled </span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @if($order->payment_mode == 1)
+                                                <span class="badge badge-info">Online </span>
+                                            @endif
+
+                                                @if($order->payment_mode == 2)
+                                                    <span class="badge badge-info">COD </span>
+                                                @endif
                                         </td>
                                         <td class="" style="">
                                             <a href="{{url('view-orders/'.$order->id)}}"

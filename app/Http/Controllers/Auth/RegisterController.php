@@ -61,9 +61,6 @@ class RegisterController extends Controller
     }
 
     function send_otp(Request $request){
-
-        $mobileNumber = $request->input('mobile');
-
         // Generate a random OTP
         $otp = mt_rand(10000, 99999);
 
@@ -71,24 +68,28 @@ class RegisterController extends Controller
         Session::put('otp', $otp);
 
         // Get the user's mobile number from the AJAX request
-        $mobileNumber = isset($_GET['mobile']) ? trim($_GET['mobile']) : '';
+        $mobileNumber = $request->mobile;
 
-//        $curl = curl_init();
-//
-//        curl_setopt_array($curl, array(
-//            CURLOPT_URL => 'http://localsmsindia.com/api/sms_api.php?username=globepaints&api_password=cc5gmpqs999&message='.$otp.'%20is%20the%20OTP%20to%20login%20to%20your%20Colour%20Dekho%20account.%20Please%20Enter%20the%20OTP%20to%20verify%20your%20mobile%20number.%20%40Globe%20Paints&destination='.$mobileNumber.'&type=2&sender=GLBPNT&template_id=1407168827967980762',
-//            CURLOPT_RETURNTRANSFER => true,
-//            CURLOPT_ENCODING => '',
-//            CURLOPT_MAXREDIRS => 10,
-//            CURLOPT_TIMEOUT => 0,
-//            CURLOPT_FOLLOWLOCATION => true,
-//            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-//            CURLOPT_CUSTOMREQUEST => 'GET',
-//        ));
-//
-//        $response = curl_exec($curl);
-//
-//        curl_close($curl);
+//        print_r($mobileNumber);die;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localsmsindia.com/api/sms_api.php?username=globepaints&api_password=cc5gmpqs999&message='.$otp.'%20is%20the%20OTP%20to%20login%20to%20your%20Colour%20Dekho%20account.%20Please%20Enter%20the%20OTP%20to%20verify%20your%20mobile%20number.%20%40Globe%20Paints&destination='.$mobileNumber.'&type=2&sender=GLBPNT&template_id=1407168827967980762',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+//        print_r($response);die;
+
+        curl_close($curl);
 
         // Check if the API call was successful
 

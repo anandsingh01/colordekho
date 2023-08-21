@@ -44,6 +44,11 @@ class OrderController extends Controller
             })
            ->select(
                 'orders.*',
+                'order_product.image as order_image',
+                'order_product.quantity as quantity',
+                'order_product.mrp as mrp',
+                'order_product.subtotal as subtotal',
+                'order_product.price as price',
                 'car_color_models.color as car_color',
                 'bike_color_models.color as bike_color',
                 'car_variations_models.variation as car_variation',
@@ -56,7 +61,7 @@ class OrderController extends Controller
             ->get();
 
 
-        print_r($data);die;
+//        print_r($data);die;
         return view('admin.orders.view-order',$data);
     }
 

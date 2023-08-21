@@ -330,6 +330,7 @@ class CheckoutController extends Controller
     public function checkout_submit(Request $request)
     {
 
+//        print_r($request->all());die;
         if(Session::has('getAllCartSession')){
             $getAllCart = Session::get('getAllCartSession');
         }
@@ -358,6 +359,17 @@ class CheckoutController extends Controller
 
         $order_id = uniqid();
 
+
+
+//        // Add the calculated amount to the initial value
+//        $finalValue = $get_count->cartTotal - $percentageToAdd;
+
+        $final_amount = $request->input('final_amount') ;
+        $cart_amount = $request->input('cart_amount') ;
+
+        $gst_amount = (int)$final_amount - (int)$cart_amount;
+//        print_r($gst_amount);die;
+
         $order = \App\Models\Order::create([
             'order_id' => $order_id,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
@@ -374,8 +386,9 @@ class CheckoutController extends Controller
             'email' => $request->input('email'),
             'final_amount' => $request->input('final_amount'),
             'coupon_code' => $request->input('coupon_code'),
-            'sales_tax' => $request->input('sales_tax'),
-            'shipping_price' => $request->input('shipping_price'),
+            'sales_tax' =>  $gst_amount,
+            'shipping_price' => $request->input('cart_amount'),
+            'payment_mode' => $request->input('payment_mode'),
             'status' => '0',
         ]);
 
@@ -419,12 +432,12 @@ class CheckoutController extends Controller
 
         }
 
-////        print_r(count($cartqty));
-//        die;
-
-
-        // Redirect the user to a success page or thank-you page
-        return redirect()->route('checkout.payment');
+        $removeCart = Cart::where('ip_address',$_SERVER['REMOTE_ADDR'])->delete();
+        if($request->payment_mode == 1){
+            return redirect()->route('checkout.payment');
+        }else{
+            return Redirect::to('/payment/success')->with('order_placed','Order has been placed. We will notify your Tracking Id on email');
+        }
     }
 
     function stripe_integrate(){

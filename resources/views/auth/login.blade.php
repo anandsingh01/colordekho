@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>Lifragrance - Admin Login</title>
+    <title> Admin Login</title>
     <!-- Favicon-->
     <link rel="icon" href="{{asset('assets/admin')}}/favicon.ico" type="image/x-icon">
     <!-- Custom Css -->
@@ -48,8 +48,7 @@
                 </form>
                 <div class="copyright text-center">
                     &copy;
-                    <script>document.write(new Date().getFullYear())</script>,
-                    <span> <a href="{{url('/')}}" target="_blank">Lifragrance  </a></span>
+                    <script>document.write(new Date().getFullYear())</script>
                 </div>
             </div>
             <div class="col-lg-8 col-sm-12">
